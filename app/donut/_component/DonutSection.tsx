@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
-import { ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import gsap from "gsap"
 
 const DonutSection = () => {
