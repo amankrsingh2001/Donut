@@ -9,6 +9,7 @@ const DonutSection = () => {
 
   const [step, setStep] = useState(1);
 
+
   const blueBerryText = useRef(null);
   const blueBerryDonut = useRef(null);
   const greenAppleDonut = useRef(null);
@@ -22,99 +23,52 @@ const DonutSection = () => {
   const timeline = useRef(gsap.timeline({ paused: true }));
   
   
-  useEffect(()=>{
-    const tl = gsap.timeline({paused:true})
-      .to(blueBerryText.current,{
-        y:700
-      },'a')
-      .to(blueBerryDonut.current,{
-        y:-510,
-        rotate:180,
-        scale:0.4
-      },'a')
-      .to(greenAppleDonut.current,{
-        top:"50%",
-        scale:1,
-        rotate:180
-      },'a')
-      .to(greenContainer.current,{
-        scale:20,
-        duration:0.8
-      },'a')
-      .to(appleGreenRefText.current,{
-        scale:1,
-        top:"30%"
-      },'a')
-      .to(".leaf1",{
-        rotate:45
-      },'a')
-      .to(".leaf2",{
-        rotate:45
-      },'a')
-      .to(".leaf3",{
-        rotate:45
-      },'a')
-      .to(".leaf4",{
-        rotate:45
-      },'a')
-      .to(bananaRef.current,{
-        top:"105%"
-      },'a')
-    
-      .to(blueBerryDonut.current,{
-        y:-580,
-        rotate:180,
-        scale:0.4
-      },'b')
-      .to(greenAppleDonut.current,{
-        y:-510,
-        rotate:180,
-        scale:0.4
-      },'b')
-      .to(bananaRef.current,{
-        scale:1,
-        top:"50%",
-        rotate:120
-      },'b')
-      .to(appleGreenRefText.current,{
-        y:700
-      },'b')
-      .to(bananaContainer.current,{
-        scale:20,
-        duration:0.8
-      },'b')
-      .to(caramelTextRef.current,{
-        scale:1,
-        top:"30%"
-      },'b')
-      .to(".leaf1",{
-        rotate:180
-      },'b')
-      .to(".leaf2",{
-        rotate:180
-      },'b')
-      .to(".leaf3",{
-        rotate:180
-      },'b')
-      .to(".leaf4",{
-        rotate:180
-      },'b')
-      timeline.current = tl;
-  },[])
+  useEffect(() => {
+    const tl = gsap.timeline({ paused: true })
+      .addLabel('step1')
+      .to(blueBerryText.current, { y: 700 }, 'a')
+      .to(blueBerryDonut.current, { y: -510, rotate: 180, scale: 0.4 }, 'a')
+      .to(greenAppleDonut.current, { top: "50%", scale: 1, rotate: 180 }, 'a')
+      .to(greenContainer.current, { scale: 20, duration: 0.8 }, 'a')
+      .to(appleGreenRefText.current, { scale: 1, top: "30%" }, 'a')
+      .to(".leaf1", { rotate: 45 }, 'a')
+      .to(".leaf2", { rotate: 45 }, 'a')
+      .to(".leaf3", { rotate: 45 }, 'a')
+      .to(".leaf4", { rotate: 45 }, 'a')
+      .to(bananaRef.current, { top: "105%" }, 'a')
+      .addLabel('step2')
+      .to(blueBerryDonut.current, { y: -580, rotate: 180, scale: 0.4 }, 'b')
+      .to(greenAppleDonut.current, { y: -510, rotate: 180, scale: 0.4 }, 'b')
+      .to(bananaRef.current, { scale: 1, top: "50%", rotate: 120 }, 'b')
+      .to(appleGreenRefText.current, { y: 700 }, 'b')
+      .to(bananaContainer.current, { scale: 20, duration: 0.8 }, 'b')
+      .to(caramelTextRef.current, { scale: 1, top: "30%" }, 'b')
+      .to(".leaf1", { rotate: 180 }, 'b')
+      .to(".leaf2", { rotate: 180 }, 'b')
+      .to(".leaf3", { rotate: 180 }, 'b')
+      .to(".leaf4", { rotate: 180 }, 'b')
+      .addLabel('step3');
+
+    timeline.current = tl;
+  }, []);
 
 
   const handlePrevious = () => {
     if (step > 1) {
-      setStep((prev) => prev - 1); 
-      timeline.current.reverse(); 
+      const targetLabel = step === 3 ? 'step2' : 'step1';
+      timeline.current.tweenTo(targetLabel);
+      setStep(prev => prev - 1);
     }
   };
-  const handleNext = ()=>{
-    if(step<3){
-      setStep((prev)=>prev+1)
-      timeline.current.play();
+
+  const handleNext = () => {
+    if (step < 3) {
+      const targetLabel = step === 1 ? 'step2' : 'step3';
+      timeline.current.tweenTo(targetLabel);
+      setStep(prev => prev + 1);
     }
-  }
+  };
+
 
   return (
     <div className="h-screen bg-custom-radial from-[#e0b8ff] to-[#744eb2] flex justify-center items-center overflow-hidden">
